@@ -165,3 +165,29 @@ def view_history(dictionary, index):
     
     plt.tight_layout()
     plt.show()
+
+def model_evaluate(model, train_gen, test_gen, val_gen):
+    columns = ['Set', 'Loss', 'Precision', 'Recall', 'Accuracy']
+    results = pd.DataFrame(columns=columns)
+    
+    # Evaluate on the training set
+    train_results = model.evaluate(train_gen)
+    train_metrics = ['Train'] + train_results[:]
+    results = results.append(dict(zip(columns, train_metrics)), ignore_index=True)
+    
+    # Evaluate on the test set
+    test_results = model.evaluate(test_gen)
+    test_metrics = ['Test'] + test_results[:]
+    results = results.append(dict(zip(columns, test_metrics)), ignore_index=True)
+    
+    # Evaluate on the validation set
+    validation_results = model.evaluate(val_gen)
+    val_metrics = ['Validation'] + validation_results[:]
+    results = results.append(dict(zip(columns, val_metrics)), ignore_index=True)
+    
+    # Lets modify the Precision, Recall, Accuracy to percentages
+    results['Precision'] = results['Precision']*100
+    results['Recall'] = results['Recall']*100
+    results['Accuracy'] = results['Accuracy']*100
+    
+    return results
