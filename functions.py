@@ -60,20 +60,19 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
 # test_data, test_labels
 
 # Define an optmizer
-def get_optimizer():
+def get_optimizer(initial_learning_rate=0.001, decay_steps=100000, decay_rate=1, staircase=False):
     # Import libraries 
     import numpy as np
     import tensorflow as tf
     
     # According to Tensorflow documentation most models learn better if you gradually redice the learning rate during training. Lets attempt to reduce the leanrning rate over time. 
-    step = np.linspace(0,100000)
     lr_schedule = tf.keras.optimizers.schedules.InverseTimeDecay(
-        0.001,
-        decay_steps=step*1000,
-        decay_rate=1,
-        staircase=False
+        initial_learning_rate=initial_learning_rate,
+        decay_steps=decay_steps,
+        decay_rate=decay_rate,
+        staircase=staircase
     )
-    return tf.keras.optimizers.Adam(lr_schedule)
+    return tf.keras.optimizers.Adam(learning_rate=lr_schedule)
 
 # Define our callbacks
 def get_callbacks():
