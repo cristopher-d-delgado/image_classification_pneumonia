@@ -163,3 +163,4 @@ cython_debug/
 data/
 # Ignore the models folder as they will be big files 
 models/
+logs/
