@@ -167,6 +167,9 @@ def view_history(dictionary, index):
     plt.show()
 
 def model_evaluate(model, train_gen, test_gen, val_gen):
+    # import libraries 
+    import pandas as pd
+    
     columns = ['Set', 'Loss', 'Precision', 'Recall', 'Accuracy']
     results = pd.DataFrame(columns=columns)
     
