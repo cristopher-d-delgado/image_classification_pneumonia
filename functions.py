@@ -59,6 +59,55 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
     return train_generator, test_generator, val_generator, 
 # test_data, test_labels
 
+
+def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_data_dir):
+    # import libraries 
+    from tensorflow.keras.preprocessing.image import ImageDataGenerator
+    
+    # Set up data generators for training, testing, and validation
+    train_datagen = ImageDataGenerator(
+        rescale=1./255, 
+        zoom_range=[.3, .7], 
+        rotation_range=20,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        vertical_flip=True,
+        horizontal_flip=True, 
+        fill_mode='nearest'
+        )
+    
+    test_val_datagen = ImageDataGenerator(rescale=1./255)
+    
+    train_generator = train_datagen.flow_from_directory(
+        train_data_dir,
+        target_size=(img_dims, img_dims),
+        batch_size=batch_size,
+        class_mode='binary', 
+        shuffle=True
+    )
+    
+    test_generator = test_val_datagen.flow_from_directory(
+        test_data_dir,
+        target_size=(img_dims, img_dims),
+        batch_size=batch_size,
+        class_mode='binary', 
+        shuffle=True
+    )
+    
+    val_generator = test_val_datagen.flow_from_directory(
+        val_data_dir,
+        target_size=(img_dims, img_dims),
+        batch_size=batch_size,
+        class_mode='binary', 
+        shuffle=True
+    )
+    
+    return train_generator, test_generator, val_generator, 
+
+
+
+
+
 # Define an optmizer
 def get_optimizer(initial_learning_rate=0.001, decay_steps=100000, decay_rate=1, staircase=False):
     # Import libraries 
