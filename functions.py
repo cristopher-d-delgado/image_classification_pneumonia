@@ -67,7 +67,7 @@ def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_d
     # Set up data generators for training, testing, and validation
     train_datagen = ImageDataGenerator(
         rescale=1./255, 
-        zoom_range=[.3, .7], 
+        zoom_range=.3, 
         rotation_range=20,
         width_shift_range=0.2,
         height_shift_range=0.2,
