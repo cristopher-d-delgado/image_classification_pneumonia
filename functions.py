@@ -4,7 +4,7 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
     from tensorflow.keras.preprocessing.image import ImageDataGenerator
     
     # Set up data generators for training, testing, and validation
-    train_datagen = ImageDataGenerator(rescale=1./255, zoom_range=0.3, vertical_flip=True)
+    train_datagen = ImageDataGenerator(rescale=1./255)
     test_val_datagen = ImageDataGenerator(rescale=1./255)
     
     train_generator = train_datagen.flow_from_directory(
