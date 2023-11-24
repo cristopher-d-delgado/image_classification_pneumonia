@@ -241,3 +241,27 @@ def model_evaluate(model, train_gen, test_gen, val_gen):
     results['Accuracy'] = results['Accuracy']*100
     
     return results
+
+def check_overfitting(results_dict, index):
+    """
+    Check if the model is overfitting based on the input dictionary.
+
+    Parameters:
+    - results_dict (dict): Dictionary containing loss, validation_loss, precision, and accuracy results.
+
+    Prints:
+    - Whether the model is overfitting and by how much.
+    """
+    training_loss = results_dict[index]['loss']
+    validation_loss = results_dict[index]['val_loss']
+
+    # Check if the model is overfitting based on loss
+    if len(training_loss) > 0 and len(validation_loss) > 0:
+        training_loss_last = training_loss[-1]
+        validation_loss_last = validation_loss[-1]
+
+        if validation_loss_last < training_loss_last:
+            overfitting_amount = training_loss_last - validation_loss_last
+            print(f"The model is overfitting by {overfitting_amount:.4f} in terms of loss.")
+        else:
+            print("The model is not overfitting in terms of loss.")
