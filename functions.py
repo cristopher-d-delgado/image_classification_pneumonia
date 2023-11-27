@@ -129,7 +129,7 @@ def get_callbacks():
     
     # Initialize callbacks 
     return [
-    EarlyStopping(monitor='val_loss', patience=5),
+    EarlyStopping(monitor='val_loss', patience=3),
     TensorBoard(log_dir="logs", histogram_freq=1),
     ]
 
