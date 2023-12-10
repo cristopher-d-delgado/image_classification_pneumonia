@@ -12,7 +12,8 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
         class_mode='binary',
-        shuffle=True
+        shuffle=True, 
+        seed = 42
     )
     
     test_generator = test_val_datagen.flow_from_directory(
@@ -20,7 +21,8 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
         class_mode='binary', 
-        shuffle=True
+        shuffle=True,
+        seed = 42
     )
     
     val_generator = test_val_datagen.flow_from_directory(
@@ -28,7 +30,8 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
         class_mode='binary', 
-        shuffle=True
+        shuffle=True,
+        seed = 42
     )
     
     # # Now that the generators are taken care of lets create labels for the test set so we can make a confusion matrix later on
