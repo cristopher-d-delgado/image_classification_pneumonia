@@ -1,4 +1,3 @@
-
 def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_dir):
     # import libraries 
     from tensorflow.keras.preprocessing.image import ImageDataGenerator
@@ -80,32 +79,13 @@ def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_d
     
     return train_generator, test_generator, val_generator, 
 
-
-
-
-
-# Define an optmizer
-def get_optimizer(initial_learning_rate=0.001, decay_steps=100000, decay_rate=1, staircase=False):
-    # Import libraries 
-    import numpy as np
-    import tensorflow as tf
-    
-    # According to Tensorflow documentation most models learn better if you gradually redice the learning rate during training. Lets attempt to reduce the leanrning rate over time. 
-    lr_schedule = tf.keras.optimizers.schedules.InverseTimeDecay(
-        initial_learning_rate=initial_learning_rate,
-        decay_steps=decay_steps,
-        decay_rate=decay_rate,
-        staircase=staircase
-    )
-    return tf.keras.optimizers.Adam(learning_rate=lr_schedule)
-
 def get_callbacks():
     # Import libraries
     from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
     
     # Initialize callbacks 
-    stop = EarlyStopping(monitor='val_loss', mode='min', min_delta=0.001, patience=5, restore_best_weights=True, verbose=1),
-    reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=3, verbose=1)
+    stop = EarlyStopping(monitor='val_loss', mode='min', min_delta=0.01, patience=3, restore_best_weights=True, verbose=1)
+    reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2, min_delta=0.01, patience=2, verbose=1)
     
     # Initialize callbacks 
     return [stop, reduce_lr]
