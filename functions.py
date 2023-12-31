@@ -34,33 +34,7 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
         seed = 42
     )
     
-    # # Now that the generators are taken care of lets create labels for the test set so we can make a confusion matrix later on
-    # test_data = []
-    # test_labels = []
-
-    # for cond in ['/NORMAL/', '/PNEUMONIA/']:
-    #     for img in os.listdir(test_data_dir + cond):
-    #         img_path = os.path.join(test_data_dir, cond, img)
-            
-    #         # Read and preprocess the image
-    #         img = plt.imread(img_path)
-    #         img = np.dstack([img, img, img])
-    #         img = img.astype('float32') / 255
-            
-    #         # Resize the image to the desired dimensions
-    #         img = tf.expand_dims(img, axis=0)  # Add an extra dimension
-    #         img = tf.image.resize(img, [img_dims, img_dims])
-            
-    #         # Remove the extra dimension and append to the list
-    #         img = tf.squeeze(img, axis=0)
-    #         test_data.append(img.numpy())
-    #         test_labels.append(cond)
-        
-    # test_data = np.array(test_data)
-    # test_labels = np.array(test_labels)
-    
-    return train_generator, test_generator, val_generator, 
-# test_data, test_labels
+    return train_generator, test_generator, val_generator
 
 
 def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_data_dir):
@@ -125,16 +99,16 @@ def get_optimizer(initial_learning_rate=0.001, decay_steps=100000, decay_rate=1,
     )
     return tf.keras.optimizers.Adam(learning_rate=lr_schedule)
 
-# Define our callbacks
 def get_callbacks():
     # Import libraries
-    from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
+    from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
     
     # Initialize callbacks 
-    return [
-    EarlyStopping(monitor='val_loss', mode='min', min_delta=0.01, patience=3, restore_best_weights=True, verbose=1),
-    TensorBoard(log_dir="logs", histogram_freq=1),
-    ]
+    stop = EarlyStopping(monitor='val_loss', mode='min', min_delta=0.01, patience=5, restore_best_weights=True, verbose=1),
+    reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=3, verbose=1)
+    
+    # Initialize callbacks 
+    return [stop, reduce_lr]
 
 
 
