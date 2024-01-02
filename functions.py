@@ -4,7 +4,8 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
     
     # Set up data generators for training, testing, and validation
     train_datagen = ImageDataGenerator(rescale=1./255)
-    test_val_datagen = ImageDataGenerator(rescale=1./255)
+    test_datagen = ImageDataGenerator(rescale=1./255)
+    val_datagen = ImageDataGenerator(rescale=1./255)
     
     train_generator = train_datagen.flow_from_directory(
         train_data_dir,
@@ -15,21 +16,21 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
         seed = 42
     )
     
-    test_generator = test_val_datagen.flow_from_directory(
+    test_generator = test_datagen.flow_from_directory(
         test_data_dir,
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
-        class_mode='binary', 
-        shuffle=True,
+        class_mode='binary',
+        shuffle=False,
         seed = 42
     )
     
-    val_generator = test_val_datagen.flow_from_directory(
+    val_generator = val_datagen.flow_from_directory(
         val_data_dir,
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
-        class_mode='binary', 
-        shuffle=True,
+        class_mode='binary',
+        shuffle=False,
         seed = 42
     )
     
@@ -66,7 +67,7 @@ def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_d
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
         class_mode='binary', 
-        shuffle=True
+        shuffle=False
     )
     
     val_generator = test_val_datagen.flow_from_directory(
@@ -74,7 +75,7 @@ def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_d
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
         class_mode='binary', 
-        shuffle=True
+        shuffle=False
     )
     
     return train_generator, test_generator, val_generator, 
@@ -92,15 +93,12 @@ def get_callbacks():
 
 
 
-def train_model(model, train_generator, val_generator, total_epochs):
+def train_model(model, train_generator, total_epochs):
     """
     model = your compiled model
-    name = log directory
     train_generator = train gen you make 
     val_generator = val gen you make as well 
     total_epochs = the number of epochs 
-    
-    ** There is a Tensorboard implementation in the callback which will save all our history which we can acces in the log directory. It is in the get_callbacks function
     """
     # import required libraries
     import time
@@ -109,7 +107,7 @@ def train_model(model, train_generator, val_generator, total_epochs):
     start_time = time.time()
 
     # Train the model for set epochs
-    history = model.fit(x=train_generator, validation_data=val_generator, epochs=total_epochs, callbacks=get_callbacks())
+    history = model.fit(x=train_generator, validation_split=0.2, epochs=total_epochs, callbacks=get_callbacks())
 
     # Record the end time for the current epoch
     end_time = time.time()
@@ -198,27 +196,3 @@ def model_evaluate(model, train_gen, test_gen, val_gen):
     results['Accuracy'] = results['Accuracy']*100
     
     return results
-
-def check_overfitting(results_dict, index):
-    """
-    Check if the model is overfitting based on the input dictionary.
-
-    Parameters:
-    - results_dict (dict): Dictionary containing loss, validation_loss, precision, and accuracy results.
-
-    Prints:
-    - Whether the model is overfitting and by how much.
-    """
-    training_loss = results_dict[index]['loss']
-    validation_loss = results_dict[index]['val_loss']
-
-    # Check if the model is overfitting based on loss
-    if len(training_loss) > 0 and len(validation_loss) > 0:
-        training_loss_last = training_loss[-1]
-        validation_loss_last = validation_loss[-1]
-
-        if validation_loss_last < training_loss_last:
-            overfitting_amount = training_loss_last - validation_loss_last
-            print(f"The model is overfitting by {overfitting_amount:.4f} in terms of loss.")
-        else:
-            print("The model is not overfitting in terms of loss.")
