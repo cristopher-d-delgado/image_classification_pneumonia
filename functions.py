@@ -93,7 +93,7 @@ def get_callbacks():
 
 
 
-def train_model(model, train_generator, total_epochs):
+def train_model(model, train_generator, val_gen, total_epochs):
     """
     model = your compiled model
     train_generator = train gen you make 
@@ -107,7 +107,7 @@ def train_model(model, train_generator, total_epochs):
     start_time = time.time()
 
     # Train the model for set epochs
-    history = model.fit(x=train_generator, validation_split=0.2, epochs=total_epochs, callbacks=get_callbacks())
+    history = model.fit(x=train_generator, validation_data=val_gen, epochs=total_epochs, callbacks=get_callbacks())
 
     # Record the end time for the current epoch
     end_time = time.time()
