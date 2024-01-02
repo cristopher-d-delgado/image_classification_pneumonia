@@ -12,6 +12,7 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
         class_mode='binary',
+        color_mode='grayscale',
         shuffle=True, 
         seed = 42
     )
@@ -21,6 +22,7 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
         class_mode='binary',
+        color_mode='grayscale',
         shuffle=False,
         seed = 42
     )
@@ -30,6 +32,7 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
         class_mode='binary',
+        color_mode='grayscale',
         shuffle=False,
         seed = 42
     )
