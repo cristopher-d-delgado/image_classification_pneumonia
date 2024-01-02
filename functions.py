@@ -61,7 +61,8 @@ def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_d
         train_data_dir,
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
-        class_mode='binary', 
+        class_mode='binary',
+        color_mode='grayscale',
         shuffle=True
     )
     
@@ -69,7 +70,8 @@ def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_d
         test_data_dir,
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
-        class_mode='binary', 
+        class_mode='binary',
+        color_mode='grayscale',
         shuffle=False
     )
     
@@ -78,6 +80,7 @@ def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_d
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
         class_mode='binary', 
+        color_mode='grayscale',
         shuffle=False
     )
     
