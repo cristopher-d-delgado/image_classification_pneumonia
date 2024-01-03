@@ -246,11 +246,11 @@ def convert_grayscale_to_rgb(input_root, output_root):
                 # Convert the image to a NumPy array
                 grayscale_array = np.array(grayscale_image)
 
-                # Replicate the single channel to create three identical channels
-                rgb_array = np.stack((grayscale_array,) * 3, axis=-1)
-
                 # Ensure the data type is uint8
                 rgb_array = rgb_array.astype('uint8')
+
+                # Replicate the single channel to create three identical channels
+                rgb_array = np.stack((grayscale_array,) * 3, axis=-1)
                 
                 # Convert the NumPy array back to an image
                 rgb_image = Image.fromarray(rgb_array)
