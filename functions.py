@@ -209,7 +209,6 @@ from PIL import Image
 
 def convert_grayscale_to_rgb(input_root, output_root):
     import os
-    import numpy as np
     from PIL import Image
     
     # Define the subdirectories
@@ -242,19 +241,10 @@ def convert_grayscale_to_rgb(input_root, output_root):
 
                 # Open the grayscale image
                 grayscale_image = Image.open(input_image_path)
-
-                # Convert the image to a NumPy array
-                grayscale_array = np.array(grayscale_image)
-
-                # Ensure the data type is uint8
-                grayscale_array = grayscale_array.astype('uint8')
-
-                # Replicate the single channel to create three identical channels
-                rgb_array = np.stack((grayscale_array,) * 3, axis=-1)
                 
-                # Convert the NumPy array back to an image
-                rgb_image = Image.fromarray(rgb_array)
-
+                # Create an RGB image by merging three identical channels
+                rgb_image = Image.merge('RGB', (grayscale_image, grayscale_image, grayscale_image))
+                
                 # Save the RGB image to the output directory
                 output_image_path = os.path.join(output_label_dir, filename)
                 rgb_image.save(output_image_path)
