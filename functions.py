@@ -242,6 +242,9 @@ def convert_grayscale_to_rgb(input_root, output_root):
                 # Open the grayscale image
                 grayscale_image = Image.open(input_image_path)
                 
+                # Convert the image to 'L' mode (8-bit pixels, black and white just in case)
+                grayscale_image = grayscale_image.convert('L')
+                
                 # Create an RGB image by merging three identical channels
                 rgb_image = Image.merge('RGB', (grayscale_image, grayscale_image, grayscale_image))
                 
