@@ -247,7 +247,7 @@ def convert_grayscale_to_rgb(input_root, output_root):
                 grayscale_array = np.array(grayscale_image)
 
                 # Ensure the data type is uint8
-                rgb_array = rgb_array.astype('uint8')
+                grayscale_array = grayscale_array.astype('uint8')
 
                 # Replicate the single channel to create three identical channels
                 rgb_array = np.stack((grayscale_array,) * 3, axis=-1)
