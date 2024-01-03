@@ -161,6 +161,7 @@ cython_debug/
 
 # Ignore the data folder since its 8GB in size
 data/
+data_color/
 # Ignore the models folder as they will be big files 
 models/
 logs/
