@@ -12,7 +12,6 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
         class_mode='binary',
-        color_mode='grayscale',
         shuffle=True, 
         seed = 42
     )
@@ -22,7 +21,6 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
         class_mode='binary',
-        color_mode='grayscale',
         shuffle=False,
         seed = 42
     )
@@ -32,7 +30,6 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
         class_mode='binary',
-        color_mode='grayscale',
         shuffle=False,
         seed = 42
     )
@@ -62,7 +59,6 @@ def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_d
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
         class_mode='binary',
-        color_mode='grayscale',
         shuffle=True
     )
     
@@ -71,7 +67,6 @@ def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_d
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
         class_mode='binary',
-        color_mode='grayscale',
         shuffle=False
     )
     
@@ -80,7 +75,6 @@ def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_d
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
         class_mode='binary', 
-        color_mode='grayscale',
         shuffle=False
     )
     
@@ -202,54 +196,3 @@ def model_evaluate(model, train_gen, test_gen, val_gen):
     results['Accuracy'] = results['Accuracy']*100
     
     return results
-
-import os
-import numpy as np
-from PIL import Image
-
-def convert_grayscale_to_rgb(input_root, output_root):
-    import os
-    from PIL import Image
-    
-    # Define the subdirectories
-    subdirectories = ['train', 'test', 'validation']
-    class_labels = ['NORMAL', 'PNEUMONIA']
-
-    # Create the output directory if it doesn't exist
-    output_directory = os.path.join(output_root, 'chest_x_ray')
-    os.makedirs(output_directory, exist_ok=True)
-
-    # Process each subdirectory
-    for subdirectory in subdirectories:
-        input_dir = os.path.join(input_root, subdirectory)
-        output_dir = os.path.join(output_directory, subdirectory)
-
-        # Create the output subdirectory if it doesn't exist
-        os.makedirs(output_dir, exist_ok=True)
-
-        # Process each class label
-        for label in class_labels:
-            input_label_dir = os.path.join(input_dir, label)
-            output_label_dir = os.path.join(output_dir, label)
-
-            # Create the output class label directory if it doesn't exist
-            os.makedirs(output_label_dir, exist_ok=True)
-
-            # Process each image in the class label directory
-            for filename in os.listdir(input_label_dir):
-                input_image_path = os.path.join(input_label_dir, filename)
-
-                # Open the grayscale image
-                grayscale_image = Image.open(input_image_path)
-                
-                # Convert the image to 'L' mode (8-bit pixels, black and white just in case)
-                grayscale_image = grayscale_image.convert('L')
-                
-                # Create an RGB image by merging three identical channels
-                rgb_image = Image.merge('RGB', (grayscale_image, grayscale_image, grayscale_image))
-                
-                # Save the RGB image to the output directory
-                output_image_path = os.path.join(output_label_dir, filename)
-                rgb_image.save(output_image_path)
-
-    print("Conversion completed successfully.")
