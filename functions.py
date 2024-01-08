@@ -55,7 +55,19 @@ def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_d
         fill_mode='nearest'
         )
     
-    test_val_datagen = ImageDataGenerator(rescale=1./255)
+    val_datagen = ImageDataGenerator(
+        rescale=1./255,
+        rotation_range=20,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        vertical_flip=True,
+        horizontal_flip=True, 
+        fill_mode='nearest'        
+        )
+    
+    test_datagen = ImageDataGenerator(
+        rescale=1./255
+    )
     
     train_generator = train_datagen.flow_from_directory(
         train_data_dir,
@@ -66,7 +78,7 @@ def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_d
         shuffle=True
     )
     
-    test_generator = test_val_datagen.flow_from_directory(
+    test_generator = test_datagen.flow_from_directory(
         test_data_dir,
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
@@ -75,7 +87,7 @@ def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_d
         shuffle=False
     )
     
-    val_generator = test_val_datagen.flow_from_directory(
+    val_generator = val_datagen.flow_from_directory(
         val_data_dir,
         target_size=(img_dims, img_dims),
         batch_size=batch_size,
