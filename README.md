@@ -25,4 +25,15 @@ Deep Learning requires images to be the same size as well as normalized. In this
 ![image_examples](images/image_examples.png)
 ## Modeling 
 
+|      Model      | Train Precision/Specificity | Validation Precision/Specificity | Test Precision/Specificity | Train Recall/Sensitivity | Validation Recall/Sensitivity | Test Recall/Sensitivity |
+|:---------------:|:---------------------------:|:--------------------------------:|:--------------------------:|:------------------------:|:-----------------------------:|:-----------------------:|
+|     MLP Base    |            96.98%           |              95.56%              |           73.09%           |          97.23%          |             97.16%            |          98.20%         |
+|  MLP Version 7  |            99.25%           |              96.42%              |           73.75%           |          98.26%          |             97.29%            |          98.71%         |
+|  MLP Augmented  |            84.61%           |              83.77%              |           67.52%           |          91.34%          |             89.81%            |          94.35%         |
+|     CNN Base    |            99.42%           |              96.36%              |           70.72%           |          99.32%          |             98.96%            |          99.74%         |
+|  CNN Version 3  |           100.00%           |              98.56%              |           71.85%           |          100.00%         |             97.68%            |          99.48%         |
+|  CNN Augmented  |            98.64%           |              98.85%              |           88.43%           |          88.79%          |             89.04%            |          94.10%         |
+|      VGG19      |            74.20%           |              74.25%              |           62.50%           |          100.00%         |            100.00%            |         100.00%         |
+| VGG19 Augmented |                             |                                  |                            |                          |                               |                         |
+
 ## Evaluation
