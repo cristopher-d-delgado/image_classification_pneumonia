@@ -346,25 +346,38 @@ def evaluate_model(model, train_features, train_labels, val_features, val_labels
     model = vgg19 model
     
     Returns:
-    Model Accuracy, Precision, Recall on Val, Test, Train sets
+    Pandas DataFrame with Loss, Accuracy, Precision, Recall for Val, Test, Train sets
     """
     
     from sklearn.metrics import precision_score, recall_score
+    import pandas as pd
+    
+    # Initialize an empty DataFrame
+    columns = ["Set", "Loss", "Accuracy", "Precision", "Recall"]
+    df = pd.DataFrame(columns=columns)
+
     # Evaluate on the training set
-    train_eval = model.evaluate(train_features, train_labels)
-    print("Training Set Metrics:")
-    print(f"Loss: {train_eval[0]}, Accuracy: {train_eval[1]}")
+    train_eval = model.evaluate(train_features, train_labels, verbose=0)
+    train_predictions = model.predict(train_features)
+    train_precision = precision_score(train_labels, (train_predictions > 0.5).astype(int))
+    train_recall = recall_score(train_labels, (train_predictions > 0.5).astype(int))
+
+    df = df.append({"Set": "Train", "Loss": train_eval[0], "Accuracy": train_eval[1], "Precision": train_precision, "Recall": train_recall}, ignore_index=True)
 
     # Evaluate on the validation set
-    val_eval = model.evaluate(val_features, val_labels)
-    print("\nValidation Set Metrics:")
-    print(f"Loss: {val_eval[0]}, Accuracy: {val_eval[1]}")
+    val_eval = model.evaluate(val_features, val_labels, verbose=0)
+    val_predictions = model.predict(val_features)
+    val_precision = precision_score(val_labels, (val_predictions > 0.5).astype(int))
+    val_recall = recall_score(val_labels, (val_predictions > 0.5).astype(int))
+
+    df = df.append({"Set": "Validation", "Loss": val_eval[0], "Accuracy": val_eval[1], "Precision": val_precision, "Recall": val_recall}, ignore_index=True)
 
     # Evaluate on the test set
-    test_eval = model.evaluate(test_features, test_labels)
+    test_eval = model.evaluate(test_features, test_labels, verbose=0)
     test_predictions = model.predict(test_features)
     test_precision = precision_score(test_labels, (test_predictions > 0.5).astype(int))
     test_recall = recall_score(test_labels, (test_predictions > 0.5).astype(int))
-    print("\nTest Set Metrics:")
-    print(f"Loss: {test_eval[0]}, Accuracy: {test_eval[1]}")
-    print(f"Precision: {test_precision}, Recall: {test_recall}")
+
+    df = df.append({"Set": "Test", "Loss": test_eval[0], "Accuracy": test_eval[1], "Precision": test_precision, "Recall": test_recall}, ignore_index=True)
+
+    return df
