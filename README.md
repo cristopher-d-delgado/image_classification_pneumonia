@@ -95,6 +95,6 @@ Since Convolutional layers take advantage of spatial feature hierarchies I expec
 
 **The test set is not augmented data. They are the regular images**
 
-![vgg19_plots](images/transferaugplots.png)
+![vgg19_plots](images/transferaugplots%20copy.png)
 
 ## Evaluation
