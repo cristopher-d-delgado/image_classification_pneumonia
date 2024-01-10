@@ -1,13 +1,13 @@
 # Pneumonia Image Classification
 
 ## Buisness Understanding 
-Biomedical Imaging is important for clinical diagnostics to classify conditions a patient might have. In order to make these decisions domain knowldege is needed. The saying that a picture can describe a thousand words is true when doctors make there assessments but, it is limted only by the doctors perception of the biomedical images to classify conditions based on biomedical imaging. Creating deep learning models that can classify conditions can be useful in clinical practice to remove such high dependencies on a doctors domain knowledge. We have to acceptnNot all medical conditions are easy to classify based on medical imaging. Interpretation of an image is only limited to what someone knows and sees. Creating deep learning models that can classify conditions is crucial because deep learning models can learn what we humans can not visually see in biomedical imaging. Implementing such models in biomedical devices in the future can change the landscape of point of care diagnostics and clinical diagnostics.
+Biomedical Imaging is important for clinical diagnostics to classify conditions a patient might have. In order to make these decisions domain knowledge is needed. The saying that a picture can describe a thousand words is true when doctors make there assessments but, it is limited only by the doctors perception of the biomedical images to classify conditions based on biomedical imaging. Creating deep learning models that can classify conditions can be useful in clinical practice to remove such high dependencies on a doctors domain knowledge. We have to accept not all medical conditions are easy to classify based on medical imaging. Interpretation of an image is only limited to what someone knows and sees. Creating deep learning models that can classify conditions is crucial because deep learning models can learn what we humans can not visually see in biomedical imaging. Implementing such models in biomedical devices in the future can change the landscape of point of care diagnostics and clinical diagnostics.
 
 ### Stakeholder
-Image Classification is a powerful tool because we can implement models for biomedical purposes into biomedical diagnostic devices. These devices depending on the purpose can be point of care or meant for a clinical setting. [Tempus](https://imagen.ai/technology/) is a company that focuses on implenting machine learning methods into medical devices by analyzing clinical, genomic, and molecular data. [Tempus Radiology](https://www.tempus.com/radiology/) is the specific department of interest for this project. Tempus does currently has an AI solution called 'Pixel for Radiology' which is a tool radiologist can use for diagnoising lung related diseases and conduitions by analyzing lung nodules. The software was approved by the FDA as a screentool as a Computer Aided System that can provide diagnostic information but the software was designed to specifically monitor lung cancer as discuessed in there [journal article](https://link.springer.com/article/10.1007/s11604-020-01009-0). With that being said, Tempus Radiology wants to look into more than cancer related deep learning tasks using CT-scans in the future. They have the foundation but would like to expand on the applications of there Pixel-Lung AI software to now classify and view developing conditions just like there current framework but with other Lung diseases and conditions.
+Image Classification is a powerful tool because we can implement models for biomedical purposes into biomedical diagnostic devices. These devices depending on the purpose can be point of care or meant for a clinical setting. [Tempus](https://www.tempus.com/) is a company that focuses on implementing machine learning methods into medical devices by analyzing clinical, genomic, and molecular data. [Tempus Radiology](https://www.tempus.com/radiology/) is the specific department of interest for this project. Tempus does currently has an AI solution called 'Pixel for Radiology' which is a tool radiologist can use for diagnosing lung related diseases and conditions by analyzing lung nodules. The software was approved by the FDA as a screen tool identifying as a Computer Aided System that can provide diagnostic information but, the software was designed to specifically monitor lung cancer as discussed in there [journal article](https://link.springer.com/article/10.1007/s11604-020-01009-0). With that being said, Tempus Radiology wants to look into more than cancer related deep learning tasks using CT-scans in the future. They have the foundation but would like to expand on the applications of there Pixel-Lung AI software to now classify and view developing conditions just like there current framework but with other Lung diseases and conditions.
 
 ## Data Understanding 
-The X-ray images images used in this git repo are of pediatric patients. The classification is a binary case on whether a pateint has Pneumonia. The dataset comes from Kermany et al. on [Mendley](https://data.mendeley.com/datasets/rscbjbr9sj/3). The dataset on Kaggle is from the original source using Version 2 that was published on January 01, 2018. This dataset has gone through the trouble of image cleaning which is just getting rid of bad quality images. The training data consists of about 4000 images classified as Pneumonia and about 1500 images of Normal images (No Pneumonia). The testing data consists of about 400 Pneumonia images and about 250 Normal images. Unfortunatly the nature of this dataset originally contains 16 validation images. This is a small amount of images to truly monitor the validation loss. Instead a custom validation folder was made by incorportaing the 16 images in the val folder back into the train folder and randomly selecting 20% of the train set of each category. In this repository the custom data distribution was utilized.
+The X-ray images images used in this git repo are of pediatric patients. The classification is a binary case on whether a patient has Pneumonia. The dataset comes from Kermany et al. on [Mendley](https://data.mendeley.com/datasets/rscbjbr9sj/3). The dataset on [Kaggle](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia) is from the original source using Version 2 that was published on January 01, 2018. This dataset has gone through the trouble of image cleaning which is just getting rid of bad quality images. The training data consists of about 4000 images classified as Pneumonia and about 1500 images of Normal images (No Pneumonia). The testing data consists of about 400 Pneumonia images and about 250 Normal images. Unfortunately the nature of this dataset originally contains 16 validation images. This is a small amount of images to truly monitor the validation loss. Instead a custom validation folder was made by incorporating the 16 images in the val folder back into the train folder and randomly selecting 20% of the train set of each category. In this repository the custom data distribution was utilized.
 
 ### Original Data Distrubution
 ![class_distribution](images/original_data_dist.png)
@@ -33,8 +33,7 @@ Deep Learning requires images to be the same size as well as normalized. In this
 |     CNN Base    |            99.42%           |              96.36%              |           70.72%           |          99.32%          |             98.96%            |          99.74%         |         00:10:44         |
 |  CNN Version 3  |           100.00%           |              98.56%              |           71.85%           |          100.00%         |             97.68%            |          99.48%         |         00:10:44         |
 |  CNN Augmented  |            98.64%           |              98.85%              |           88.43%           |          88.79%          |             89.04%            |          94.10%         |         00:23:11         |
-|      VGG19      |            74.20%           |              74.25%              |           62.50%           |          100.00%         |            100.00%            |         100.00%         |         00:50:24         |
-| VGG19 Augmented |            90.54%           |              89.49%              |           78.24%           |          88.47%          |             88.91%            |          71.02%         |         02:28:32         |
+|      VGG19      |            99.96%           |              98.32%              |           75.24%           |          100.00%         |            100.00%            |         100.00%         |         00:50:24         |
 
 ## Performance Metrics
 ### Machine Learning Perceptrons 
@@ -52,7 +51,7 @@ The Machine Learning Perceptrons (MLP) alone did not do very well in learning ho
 #### Augmented Plots
 Another approach was to take the trained Version 7 MLP model and attempt data augmentation in hopes of improving the Precision. Using augmented data generators would act as new images for the model to train on. The validation and training sets were augmented images while the test set was not augmented. Overall we achieved a worse Precision performance and Recall Performance. There was no success in data augmentation. 
 
-**The test set is not augmented data. They are the regular images**
+**The test set is not augmented data. They are the regular images.**
 
 |     Set    | Losss | Precision | Recall | Accuracy |
 |:----------:|:-----:|:---------:|:------:|:--------:|
@@ -77,7 +76,7 @@ Including a convolutional layer in the model architecture proved to almost perfe
 #### Augmented Plots
 Since Convolutional layers take advantage of spatial feature hierarchies I expected a big performance increase in Precision and slightly smaller performance decrease in Recall. When it comes to images spatial hierarchies and patterns are important for the model to learn and understand. Using Data Augmentation I took the trained Convolutional Neural Network version 3 and retrained it with augmented data. As a result, the model did great on Normal images! Looking at the loss curves the model does not show signs of over fit as both curves are still generally decreasing. The model learns well and performs great!
 
-**The test set is not augmented data. They are the regular images**
+**The test set is not augmented data. They are the regular images.**
 
 |     Set    |  Loss | Precision | Recall | Accuracy |
 |:----------:|:-----:|:---------:|:------:|:--------:|
@@ -88,15 +87,24 @@ Since Convolutional layers take advantage of spatial feature hierarchies I expec
 ![cnnaug_plots](images/cnnaugplots.png)
 
 ### VGG19 Transfer Learning
-#### Version 1 Plots
-Transfer Learning can be very useful and usually very effective. The main downside of deep transfer learning is training time. It can take substantially longer to train the dense network that is added on due the higher parameter count even though we set the vgg19 model to not train. Using VGG19 with a custom dense network just yielded 
+Transfer Learning can be very useful and usually very effective. The main downside of deep transfer learning is training time if we decide to take the Convolutional network of VGG19 and remove the last Dense layers so we can fine tune the dense architecture to our specific needs. This process can be daunting without the use of high end GPU hardware. 
 
-![vgg19_plots](images/transferplots.png)
+Instead, we can utilize the architecture and use the pre-trained network to extract the features in our images and save them in a dataframe full of arrays. Using these extracted features we can make a dense network to attempt to classify images. This process is much more efficient however we can't augment the data which is the main downside.
 
-#### Augmented Plots
+Utilizing the pre-trained network we can see how the extracted features had similar performance to our Convolutional Network without the use of data augmentation. The model performs very well in classifying Pneumonia images but not Normal Images. This adds up because our training set has substantially lower amount of Normal Images to train on. 
 
-**The test set is not augmented data. They are the regular images**
+|     Set    |  Loss | Precision | Recall | Accuracy |
+|:----------:|:-----:|:---------:|:------:|:--------:|
+|    Train   | 0.013 |   99.96%  | 99.96% |  99.96%  |
+|    Test    | 0.995 |   75.24%  | 99.74% |  75.24%  |
+| Validation | 0.068 |   98.32%  | 98.32% |  98.32%  |
 
-![vgg19_plots](images/transferaugplots.png)
+![vgg19_plots](images/vgg19.png)
 
 ## Evaluation
+I would recommend to choose the **Augmented Convolutional Neural Network** into the existing Pixel for Radiology. This model outperforms all models in terms of Precision/Specificity and, performs equally as well as all other models in Recall/Sensitivity. Adding on, the model generalizes well to unknown data shows by its learning curves in the Epoch vs Loss Plot. Good generalization allows the model to further improve in the future as well. The model complexity is also much simpler than the VGG19 architecture. The model size is much smaller which as a result lets deployment into the existing framework much easier and compatible.
+
+## Conclusion
+To conclude the best model was Augmented Convolutional Neural Network. This was the case due to its superior Precision metric in comparison to the other models. It performed just as well in the Recall metric like all other models nearly perfecting it. The generalization of the model is also another bonus for this model as it can generalize well to unknown data. 
+
+It can take substantially longer to train the dense network that is added on to VGG19 due the higher parameter count even though we set the vgg19 model to not train. Fine tunning the VGG19 with a custom dense network can possibly produce similar if not better results than the current Augmented Convolutional Neural Network. The main limitation here is training time and computational resources. If there were a next step to look at it would be fine tunning the VGG19 architecture to this specific classification project. 
