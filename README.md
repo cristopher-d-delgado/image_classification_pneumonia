@@ -1,8 +1,7 @@
 # Pneumonia Image Classification
-**Author:** Cristopher Delgado
-**Blog:**[DEV]()
-[**LinkedIn**](https://www.linkedin.com/in/cristopher-d-delgado/)
-[**Github**](https://github.com/cristopher-d-delgado)
+**Author:** Cristopher Delgado ([**LinkedIn**](https://www.linkedin.com/in/cristopher-d-delgado/), [**Github**](https://github.com/cristopher-d-delgado))
+
+**Blog:** [DEV]()
 ## Buisness Understanding 
 Biomedical Imaging is important for clinical diagnostics to classify conditions a patient might have. In order to make these decisions domain knowledge is needed. The saying that a picture can describe a thousand words is true when doctors make there assessments but, it is limited only by the doctors perception of the biomedical images to classify conditions based on biomedical imaging. Creating deep learning models that can classify conditions can be useful in clinical practice to remove such high dependencies on a doctors domain knowledge. We have to accept not all medical conditions are easy to classify based on medical imaging. Interpretation of an image is only limited to what someone knows and sees. Creating deep learning models that can classify conditions is crucial because deep learning models can learn what we humans can not visually see in biomedical imaging. Implementing such models in biomedical devices in the future can change the landscape of point of care diagnostics and clinical diagnostics.
 
