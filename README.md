@@ -1,5 +1,8 @@
 # Pneumonia Image Classification
-
+**Author:** Cristopher Delgado
+**Blog:**[DEV]()
+[**LinkedIn**](https://www.linkedin.com/in/cristopher-d-delgado/)
+[**Github**](https://github.com/cristopher-d-delgado)
 ## Buisness Understanding 
 Biomedical Imaging is important for clinical diagnostics to classify conditions a patient might have. In order to make these decisions domain knowledge is needed. The saying that a picture can describe a thousand words is true when doctors make there assessments but, it is limited only by the doctors perception of the biomedical images to classify conditions based on biomedical imaging. Creating deep learning models that can classify conditions can be useful in clinical practice to remove such high dependencies on a doctors domain knowledge. We have to accept not all medical conditions are easy to classify based on medical imaging. Interpretation of an image is only limited to what someone knows and sees. Creating deep learning models that can classify conditions is crucial because deep learning models can learn what we humans can not visually see in biomedical imaging. Implementing such models in biomedical devices in the future can change the landscape of point of care diagnostics and clinical diagnostics.
 
@@ -17,7 +20,7 @@ The X-ray images images used in this git repo are of pediatric patients. The cla
 
 Deep Learning uses information found in data which in this case are images. It is a type of machine learning that involves training artifical neural networks to perform tasks. In this notebook the task is to classify an image/condition as 'Normal' or 'Pneumonia'. The deep network learns to recognize patterns and features by adjusting its paramters based on the input data which are tensors that are derievd from images. 
 
-The dataset does have an imbalance of images. This as a result may cause higher Recall/Sensitivity beacuse there are more pneumonia images to train on. This is the case because Pneumonia is our True positive case which as a result increaseing the the True Positive Rate which is Recall. We can use data augmentation to address this issue to create 'synthetic' images for the model to train on to have more availability to Negative cases which are normal images. Adding on, we can also attempt transder learning using the VGG19 pretrained model network to see what result we get on our test and training sets.
+The dataset does have an imbalance of images. This as a result may cause higher Recall/Sensitivity beacuse there are more pneumonia images to train on. This is the case because Pneumonia is our True positive case which as a result increasing the the True Positive Rate which is Recall. We can use data augmentation to address this issue to create 'synthetic' images for the model to train on to have more availability to Negative cases which are normal images. Adding on, we can also attempt transder learning using the VGG19 pretrained model network to see what result we get on our test and training sets.
 
 ## Data Preparation
 Deep Learning requires images to be the same size as well as normalized. In this dataset, images should be resized to a consistent dimension, and pixel values should be normalized. All the data preapation can be found in the functions python file in a function called 'process_data'. Overall this function resizes all images to a common dimension which in this case was 128, 128. Normalization was conducted by normalizing pixel values to a common scale which was done by dividing each pixel value in the image by 255 which as a result brings all pixel values to a value between 0 and 1. The function will also convert the grayscale images that have 1 channel to become a 3 channel image which is supported by many transfer learning models. Three channel images are just 'RGB'. An Image Data Generator was utilized to faciliate this process that labels Pneumonia as the postive instance and Normal images as the negative case. 
@@ -101,10 +104,22 @@ Utilizing the pre-trained network we can see how the extracted features had simi
 
 ![vgg19_plots](images/vgg19.png)
 
-## Evaluation
+# Evaluation
 I would recommend to choose the **Augmented Convolutional Neural Network** into the existing Pixel for Radiology. This model outperforms all models in terms of Precision/Specificity and, performs equally as well as all other models in Recall/Sensitivity. Adding on, the model generalizes well to unknown data shows by its learning curves in the Epoch vs Loss Plot. Good generalization allows the model to further improve in the future as well. The model complexity is also much simpler than the VGG19 architecture. The model size is much smaller which as a result lets deployment into the existing framework much easier and compatible.
 
-## Conclusion
+# Conclusion
 To conclude the best model was Augmented Convolutional Neural Network. This was the case due to its superior Precision metric in comparison to the other models. It performed just as well in the Recall metric like all other models nearly perfecting it. The generalization of the model is also another bonus for this model as it can generalize well to unknown data. 
 
 It can take substantially longer to train the dense network that is added on to VGG19 due the higher parameter count even though we set the vgg19 model to not train. Fine tunning the VGG19 with a custom dense network can possibly produce similar if not better results than the current Augmented Convolutional Neural Network. The main limitation here is training time and computational resources. If there were a next step to look at it would be fine tunning the VGG19 architecture to this specific classification project. 
+
+# Repository Structure
+
+| Folder                         | Description                                                                      |
+|--------------------------------|----------------------------------------------------------------------------------|
+| image_classification_pneumonia | Root folder                                                                      |
+| -\| images                     | Folder containing all the images in README                                       |
+| -\| .gitignore                 | files ignored for git push                                                       |
+| -\| data_split.ipynb           | Jupyter notebook containing code and steps for creating custom validation folder |
+| -\| functions.py               | Custom functions used in the mlp_cnn.ipynb notebook                              |
+| -\| mlp_cnn.ipynb              | Main notebook containig all models and iterations                                |
+| -\| README.md                  | Project summary                                                                  |
