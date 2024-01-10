@@ -39,16 +39,52 @@ Deep Learning requires images to be the same size as well as normalized. In this
 ## Performance Metrics
 ### Machine Learning Perceptrons 
 #### Version 7 Plots
+The Machine Learning Perceptrons (MLP) alone did not do very well in learning how an image can be a negative case. Yes the dataset was imbalanced which as a result caused the Recall to be substantially better in the test set. The Version 7 model is really good at classifying positive cases as shown in the Recall performance metric of 98.71%. The model fails to learn how to classify a negative case. This leads to a poor Precision Metric. The model never does over fit and on paper the model converges on both the validation and training sets having minimal losses. This overall shows how the model has learned everything it can learn using only MLP. This behavior is shown in the Loss vs Epoch graph below.
+
+|     Set    |  Loss | Precision | Recall | Accuracy |
+|:----------:|:-----:|:---------:|:------:|:--------:|
+|    Train   | 0.074 |   99.25%  | 98.26% |  98.16%  |
+|    Test    | 0.865 |   73.75%  | 98.71% |  77.24%  |
+| Validation | 0.149 |   96.42%  | 97.29% |  95.31%  |
+
 ![mlpv7_plots](images/mlpv7plots.png)
 
 #### Augmented Plots
+Another approach was to take the trained Version 7 MLP model and attempt data augmentation in hopes of improving the Precision. Using augmented data generators would act as new images for the model to train on. The validation and training sets were augmented images while the test set was not augmented. Overall we achieved a worse Precision performance and Recall Performance. There was no success in data augmentation. 
+
+**The test set is not augmented data. They are the regular images**
+
+|     Set    | Losss | Precision | Recall | Accuracy |
+|:----------:|:-----:|:---------:|:------:|:--------:|
+|    Train   | 0.434 |   84.61%  | 91.34% |  81.25%  |
+|    Test    | 0.580 |   67.52%  | 94.35% |  68.10%  |
+| Validation | 0.431 |   83.77%  | 89.81% |  79.52%  |
+
 ![mlpaug_plots](images/mlpaugplots.png)
 
-### Convolutional Neural Network 
+### Convolutional Neural Network with Machine Learning Perceptrons 
 #### Version 3 Plots
+Including a convolutional layer in the model architecture proved to almost perfectly classify positive images which include Pneumonia. All sets were around 99%. The lack of Normal images to train on caused the model to perform poorly on the Normal images in the test set. Even though the model converges on both the validation and train with no over fit as seen the graph below the test set does not do well on the negative cases as shown by the low test Precision Score. The model does very well classifying Pneumonia images on sets.
+
+|     Set    |  Loss | Precision |  Recall | Accuracy |
+|:----------:|:-----:|:---------:|:-------:|:--------:|
+|    Train   | 0.020 |  100.00%  | 100.00% |  100.00% |
+|    Test    | 1.336 |   71.85%  |  99.84% |  75.32%  |
+| Validation | 0.097 |   98.56%  |  97.68% |  97.22%  |
+
 ![cnnv3_plots](images/cnnv3plots.png)
 
 #### Augmented Plots
+Since Convolutional layers take advantage of spatial feature hierarchies I expected a big performance increase in Precision and slightly smaller performance decrease in Recall. When it comes to images spatial hierarchies and patterns are important for the model to learn and understand. Using Data Augmentation I took the trained Convolutional Neural Network version 3 and retrained it with augmented data. As a result, the model did great on Normal images! Looking at the loss curves the model does not show signs of over fit as both curves are still generally decreasing. The model learns well and performs great!
+
+**The test set is not augmented data. They are the regular images**
+
+|     Set    |  Loss | Precision | Recall | Accuracy |
+|:----------:|:-----:|:---------:|:------:|:--------:|
+|    Train   | 0.228 |   98.64%  | 88.79% |  90.78%  |
+|    Test    | 0.360 |   88.43%  | 94.10% |  88.62%  |
+| Validation | 0.217 |   98.85%  | 89.04% |  91.10%  |
+
 ![cnnaug_plots](images/cnnaugplots.png)
 
 ### VGG19 Transfer Learning
@@ -56,6 +92,9 @@ Deep Learning requires images to be the same size as well as normalized. In this
 ![vgg19_plots](images/transferplots.png)
 
 #### Augmented Plots
+
+**The test set is not augmented data. They are the regular images**
+
 ![vgg19_plots](images/transferaugplots.png)
 
 ## Evaluation
