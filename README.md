@@ -120,5 +120,6 @@ It can take substantially longer to train the dense network that is added on to 
 | -\| .gitignore                 | files ignored for git push                                                       |
 | -\| data_split.ipynb           | Jupyter notebook containing code and steps for creating custom validation folder |
 | -\| functions.py               | Custom functions used in the mlp_cnn.ipynb notebook                              |
-| -\| mlp_cnn.ipynb              | Main notebook containing all models and iterations                                |
+| -\| mlp_cnn.ipynb              | Main notebook containing all models and iterations                               |
+| -\| Pneumonia Detection.pdf    | PDF version of presentation                                                      |
 | -\| README.md                  | Project summary                                                                  |
