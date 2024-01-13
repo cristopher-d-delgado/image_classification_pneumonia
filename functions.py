@@ -1,4 +1,28 @@
 def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_dir):
+    """"
+    Pre-processes image data and sets up generators for training, testing, and validation. 
+    
+    Parameters:
+    - img_dims (int): Specify the image dimensions in a single number. ex-> 128 will produce (128, 128).
+    - batch_size (int): Provide the batch size the image data generators will produce.
+    - train_data_dir (str): Provide the train folder directory.
+    - test_data_dir (str): Provide the test folder directory.
+    - val_data_dir (str): Provide the validation folder directory.
+    
+    Returns:
+    - train_generator (tf.keras.preprocessing.image.ImageDataGenerator.flow_from_directory): image data generator for training images
+    - test_generator (tf.keras.preprocessing.image.ImageDataGenerator.flow_from_directory): image data generator for testing images
+    - val_generator (tf.keras.preprocessing.image.ImageDataGenerator.flow_from_directory): image data generator for validation images
+    
+    Example: 
+    >>> train_generator, test_generator, validation_generator = process_data(
+        img_dims=128, 
+        batch_size=32, 
+        train_data_dir="data/train_folder", 
+        test_data_dir="data/test_folder", 
+        val_data_dir="data/validation_folder"
+    )
+    """
     # import libraries 
     from tensorflow.keras.preprocessing.image import ImageDataGenerator
     
@@ -41,6 +65,34 @@ def process_data(img_dims, batch_size, train_data_dir, test_data_dir, val_data_d
 
 
 def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_data_dir):
+    """"
+    Pre-processes image data and sets up generators for training, testing, and validation.
+    
+    Parameters:
+    - img_dims (int): Specify the image dimensions in a single number. ex-> 128 will produce (128, 128).
+    - batch_size (int): Provide the batch size the image data generators will produce.
+    - train_data_dir (str): Provide the train folder directory.
+    - test_data_dir (str): Provide the test folder directory.
+    - val_data_dir (str): Provide the validation folder directory.
+    
+    Returns:
+    - train_generator (tf.keras.preprocessing.image.ImageDataGenerator.flow_from_directory): image data generator for training images
+    - test_generator (tf.keras.preprocessing.image.ImageDataGenerator.flow_from_directory): image data generator for testing images
+    - val_generator (tf.keras.preprocessing.image.ImageDataGenerator.flow_from_directory): image data generator for validation images
+    
+    Image Data Generators Configuration:
+    - Training and validation data undergo data augmentation, including rotation, width and height shifts,
+      vertical and horizontal flips, and nearest filling mode.
+    - Testing data is rescaled without augmentation.
+    
+    Example: 
+    >>> train_generator, test_generator, validation_generator = data_augmentation(img_dims=128, 
+    ...    batch_size=32, 
+    ...    train_data_dir="data/train_folder", 
+    ...    test_data_dir="data/test_folder", 
+    ...    val_data_dir="data/validation_folder"
+    ... )
+    """
     # import libraries 
     from tensorflow.keras.preprocessing.image import ImageDataGenerator
     
@@ -99,6 +151,12 @@ def data_augmentation(img_dims, batch_size, train_data_dir, test_data_dir, val_d
     return train_generator, test_generator, val_generator 
 
 def get_callbacks():
+    """
+    Provides training callbacks that will be used for model training. 
+    
+    Returns:
+    - stop: Early stopping callback
+    """
     # Import libraries
     from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
     
@@ -113,10 +171,23 @@ def get_callbacks():
 
 def train_model(model, train_generator, val_gen, total_epochs):
     """
-    model = your compiled model
-    train_generator = train gen you make 
-    val_generator = val gen you make as well 
-    total_epochs = the number of epochs 
+    Trains a Keras model using provided generators for training and validation.
+    
+    Parameters:
+    - model (tf.keras.Model): provide the compiled model.
+    - train_generator (tf.keras.preprocessing.image.ImageDataGenerator.flow_from_directory): provide the image train_generator. 
+    - val_generator (tf.keras.preprocessing.image.ImageDataGenerator.flow_from_directory): provide the image validation generator.
+    - total_epochs (int): provide the total number of epochs desired for training. 
+    
+    Returns:
+    - history (dict): A dictionary containing training and validation metrics over epochs.
+    
+    >>> Example: history = train_model(
+        model=my_model, 
+        train_generator=train_data_generator,
+        val_generator=val_data_generator, 
+        total_epochs=10
+    )
     """
     # import required libraries
     import time
@@ -138,6 +209,32 @@ def train_model(model, train_generator, val_gen, total_epochs):
     return history.history
 
 def view_history(dictionary, index):
+    """
+    Visualize training history metrics using matplotlib.
+
+    Parameters:
+    - dictionary (list): A list containing dictionaries with training history metrics.
+    - index (int): Index specifying which dictionary to visualize.
+
+    Each dictionary in the list should contain the following keys:
+    - 'loss': Training loss values.
+    - 'val_loss': Validation loss values.
+    - 'accuracy': Training accuracy values.
+    - 'val_accuracy': Validation accuracy values.
+    - 'recall': Training recall values.
+    - 'precision': Training precision values.
+    - 'val_recall': Validation recall values.
+    - 'val_precision': Validation precision values.
+
+    The function generates subplots for the following metrics:
+    1. Loss vs Epoch
+    2. Accuracy vs Epoch
+    3. Precision vs Epoch
+    4. Recall vs Epoch
+    
+    Example:
+    >>> view_history(history_list, 0)
+    """
     # import required libraries
     import matplotlib.pyplot as plt
     import numpy as np
@@ -187,6 +284,22 @@ def view_history(dictionary, index):
     plt.show()
 
 def model_evaluate(model, train_gen, test_gen, val_gen):
+    """
+    Evaluate a Keras model on training, testing, and validation sets.
+
+    Parameters:
+    - model (tf.keras.Model): The Keras model to be evaluated.
+    - train_gen (tf.keras.preprocessing.image.ImageDataGenerator.flow_from_directory): Image data generator for training set.
+    - test_gen (tf.keras.preprocessing.image.ImageDataGenerator.flow_from_directory): Image data generator for testing set.
+    - val_gen (tf.keras.preprocessing.image.ImageDataGenerator.flow_from_directory): Image data generator for validation set.
+
+    Returns:
+    - results (pd.DataFrame): A DataFrame containing evaluation metrics for each dataset.
+      Columns: ['Set', 'Loss', 'Precision', 'Recall', 'Accuracy']
+
+    Example:
+    >>> model_evaluate(my_model, train_data_generator, test_data_generator, val_data_generator)
+    """
     # import libraries 
     import pandas as pd
     
@@ -218,13 +331,31 @@ def model_evaluate(model, train_gen, test_gen, val_gen):
 
 def extract_features_vgg19(model, train_gen, val_gen, test_gen):
     """
-    model = vgg19 
-    train_gen = training generator
-    val_gen = validation generator
-    test_gen = test generator
-    
-    return:
-    Extracted train_features, train_labels, val_features, val_labels, test_features, test_labels using the VGG19 architecture
+    Extracts features from a pre-trained VGG19 model for given data generators.
+
+    Parameters:
+    - model (tf.keras.Model): Pre-trained VGG19 model.
+    - train_gen (tf.keras.preprocessing.image.ImageDataGenerator.flow_from_directory): Image data generator for training set.
+    - val_gen (tf.keras.preprocessing.image.ImageDataGenerator.flow_from_directory): Image data generator for validation set.
+    - test_gen (tf.keras.preprocessing.image.ImageDataGenerator.flow_from_directory): Image data generator for test set.
+
+    Returns:
+    - train_features (numpy.ndarray): Extracted features for the training set.
+    - train_labels (numpy.ndarray): Labels for the training set.
+    - val_features (numpy.ndarray): Extracted features for the validation set.
+    - val_labels (numpy.ndarray): Labels for the validation set.
+    - test_features (numpy.ndarray): Extracted features for the test set.
+    - test_labels (numpy.ndarray): Labels for the test set.
+
+    The extracted features have shape (number of samples, 4, 4, 512), corresponding to the output shape of the VGG19 model.
+
+    Example:
+    >>> train_features, train_labels, val_features, val_labels, test_features, test_labels = extract_features_vgg19(
+    ...     model=my_vgg19_model,
+    ...     train_gen=train_data_generator,
+    ...     val_gen=val_data_generator,
+    ...     test_gen=test_data_generator
+    ... )
     """
     import numpy as np
     
@@ -280,11 +411,22 @@ def extract_features_vgg19(model, train_gen, val_gen, test_gen):
 
 def view_history_vgg19(history):
     """
-    Arguments:
-    history = model.fit() stored in a variable
-    
+    Visualize performance metrics from a VGG19 model training history.
+
+    Parameters:
+    - history (tf.keras.callbacks.History): The training history obtained from model.fit().
+
     Returns:
-    Plots showing performances
+    - Plots showing the training and validation performance metrics.
+
+    The function generates subplots for the following metrics:
+    1. Loss vs Epoch
+    2. Accuracy vs Epoch
+    3. Precision vs Epoch
+    4. Recall vs Epoch
+
+    Example:
+    >>> view_history_vgg19(training_history)
     """
     
     # import required libraries
@@ -341,12 +483,31 @@ def view_history_vgg19(history):
 
 def evaluate_model(model, train_features, train_labels, val_features, val_labels, test_features, test_labels):
     """
-    Arguments:
-    train_features, train_labels, val_features, val_labels, test_features, test_labels originates from the extract_features_vgg19 function
-    model = vgg19 model
-    
+    Evaluate a VGG19 model on training, validation, and test sets using multiple metrics.
+
+    Parameters:
+    - model (tf.keras.Model): Pre-trained VGG19 model.
+    - train_features (numpy.ndarray): Extracted features for the training set.
+    - train_labels (numpy.ndarray): Labels for the training set.
+    - val_features (numpy.ndarray): Extracted features for the validation set.
+    - val_labels (numpy.ndarray): Labels for the validation set.
+    - test_features (numpy.ndarray): Extracted features for the test set.
+    - test_labels (numpy.ndarray): Labels for the test set.
+
     Returns:
-    Pandas DataFrame with Loss, Accuracy, Precision, Recall for Val, Test, Train sets
+    - results (pd.DataFrame): A DataFrame containing evaluation metrics for each dataset.
+      Columns: ['Set', 'Loss', 'Accuracy', 'Precision', 'Recall']
+
+    Example:
+    >>> evaluation_results = evaluate_model(
+    ...     model=my_vgg19_model,
+    ...     train_features=train_features,
+    ...     train_labels=train_labels,
+    ...     val_features=val_features,
+    ...     val_labels=val_labels,
+    ...     test_features=test_features,
+    ...     test_labels=test_labels
+    ... )
     """
     
     from sklearn.metrics import precision_score, recall_score
