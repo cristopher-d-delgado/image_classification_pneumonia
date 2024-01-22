@@ -104,7 +104,11 @@ Utilizing the pre-trained network we can see how the extracted features had simi
 ![vgg19_plots](images/vgg19.png)
 
 # Evaluation
-I would recommend to choose the **Augmented Convolutional Neural Network** into the existing Pixel for Radiology. This model outperforms all models in terms of Precision/Specificity and, performs equally as well as all other models in Recall/Sensitivity. Adding on, the model generalizes well to unknown data shows by its learning curves in the Epoch vs Loss Plot. Good generalization allows the model to further improve in the future as well. The model complexity is also much simpler than the VGG19 architecture. The model size is much smaller which as a result lets deployment into the existing framework much easier and compatible.
+![model_learning](images/model_learning.png)
+
+**I would recommend to choose the Augmented Convolutional Neural Network into the existing Pixel for Radiology**.
+
+Picking the best model in this scenario would be to choose the model with the best Recall/Sensitivity. This is the case because the worst scenario would be to label a patient with Pneumonia has Normal. model outperforms all models in terms of Precision/Specificity and, performs equally as well as all other models in Recall/Sensitivity. Since this is the case, it would be much better to recognize that small tradeoff of about 5% in Sensitivity and more than 10% in Specificity. The model generalizes well to unknown data shown by its learning curves in the Epoch vs Loss Plot. This good generalization allows the model to further improve in the future as well. The model complexity is also much simpler than the VGG19 architecture. The model size is much smaller which as a result lets deployment into the existing framework much easier and compatible.
 
 # Conclusion
 To conclude the best model was Augmented Convolutional Neural Network. This was the case due to its superior Precision metric in comparison to the other models. It performed just as well in the Recall metric like all other models nearly perfecting it. The generalization of the model is also another bonus for this model as it can generalize well to unknown data. 
