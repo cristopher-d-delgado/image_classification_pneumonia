@@ -147,7 +147,7 @@ It can take substantially longer to train the dense network that is added on to 
 ## Next Steps
 
 Modeling was conducted on pediatric patients only. The next step would be to take the model and attempt predicting adult images. Adding on also create a model that was trained on adult images and attempt prediction on pediatric patients. Lastly, a model should be developed that is trained on both to see the results.  
-.
+
 # Repository Structure
 
 | Folder                         | Description                                                                      |
