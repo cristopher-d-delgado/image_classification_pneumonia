@@ -144,6 +144,10 @@ To conclude the best model was the Augmented Convolutional Neural Network. This 
 
 It can take substantially longer to train the dense network that is added on to VGG19 due the higher parameter count even though we set the vgg19 model to not train. Fine tunning the VGG19 with a custom dense network can possibly produce similar if not better results than the current Augmented Convolutional Neural Network. The main limitation here is training time and computational resources. If there were a next step to look at it would be fine tunning the VGG19 architecture to this specific classification project. 
 
+## Next Steps
+
+Modeling was conducted on pediatric patients only. The next step would be to take the model and attempt predicting adult images. Adding on also create a model that was trained on adult images and attempt prediction on pediatric patients. Lastly, a model should be developed that is trained on both to see the results.  
+.
 # Repository Structure
 
 | Folder                         | Description                                                                      |
